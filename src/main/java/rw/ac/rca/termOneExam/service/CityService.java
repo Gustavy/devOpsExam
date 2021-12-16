@@ -15,14 +15,17 @@ public class CityService {
 
 	@Autowired
 	private ICityRepository cityRepository;
-	
+
 	public Optional<City> getById(long id) {
 		
 		return cityRepository.findById(id);
 	}
 
 	public List<City> getAll() {
-		
+		List<City> cities = cityRepository.findAll();
+		for(City city:cities) {
+			city.setFahrenheit((city.getWeather() * 9/5) + 32);
+		}
 		return cityRepository.findAll();
 	}
 

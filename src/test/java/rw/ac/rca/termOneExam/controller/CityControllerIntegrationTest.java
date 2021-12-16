@@ -45,7 +45,6 @@ public class CityControllerIntegrationTest {
 
     @Test
     public void addCitySuccess() {
-
         CreateCityDTO city=new CreateCityDTO();
         city.setName("Kicukiro");
         city.setWeather(22);
@@ -57,7 +56,18 @@ public class CityControllerIntegrationTest {
         assertEquals(22, response.getBody().getWeather());
     }
 
+    @Test
     public void addCityFail(){
-        
+
+            CreateCityDTO city=new CreateCityDTO();
+            city.setName("Kigali");
+            city.setWeather(28.0);
+
+            ResponseEntity<APICustomResponse> response = this.restTemplate.postForEntity("/api/cities/add", city, APICustomResponse.class);
+
+            assertEquals(400, response.getStatusCodeValue());
+            assertEquals("City name " + city.getName() + " is registered already",response.getBody().getMessage());
+
     }
+
 }
